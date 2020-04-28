@@ -1,0 +1,6 @@
+1. create Employee parent class with following properties and methods;
+- name
+- id
+- email
+
+
