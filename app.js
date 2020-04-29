@@ -12,75 +12,110 @@ const inquirer = require("inquirer");
 
 const teamArr = [];
 
+
+// core questions from Manager class
+const manager = [{
+    type: 'input',
+    name: 'officeNumber',
+    message: 'Office number?'
+}];
+
+
 // selector function to determine which questions to serve
+function getType() {
+    return inquirer
 
-{
-    type: 'list',
-    choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
-    name: 'type',
-    message: 'Choose team member',
-}
-
-
-const coreQuestions = [{
-    type: 'input',
-    name: 'name',
-    message: 'Team member\'s name?'
-}, {
-    type: 'input',
-    name: 'ID',
-    message: 'Please enter ID number',
-}, {
-    type: 'input',
-    name: 'email',
-    message: 'Please enter email address',
-    // TODO validation func here
-}];
+        .prompt([
+            {
+                type: 'list',
+                choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
+                name: 'type',
+                message: 'Choose team member',
+            }
+        ])
+};
 
 
+// asks employee questions
+function getEmployee() {
 
-//new approach with 
+    // core questions from Employee class
+    const employee = [{
+        type: 'input',
+        name: 'name',
+        message: 'Team member\'s name?'
+    }, {
+        type: 'input',
+        name: 'ID',
+        message: 'ID number?',
+    }, {
+        type: 'input',
+        name: 'email',
+        message: 'email address?',
+        // TODO validation func here
+    }];
 
-'use strict';
-var inquirer = require('inquirer');
-var output = [];
-var questions = [{
-    type: 'input',
-    name: 'tvShow',
-    message: 'What's your favorite TV show?'
-}, {
-    type: 'confirm',
-    name: 'askAgain',
-    message: 'Want to enter another TV show favorite (just hit enter for YES)?',
-    default: true
-}, {
-    type: 'input',
-    name: 'movie',
-    message: 'What's your favorite Movie?'
-}, {
-    type: 'confirm',
-    name: 'askAgin',
-    message: 'Have one more fav?',
-    default: true
-}];
+    return inquirer.prompt(employee)
+};
 
-function ask() {
-    inquirer.prompt(questions, function(answers) {
-        output.push(answers.tvShow);
-        if (answers.askAgain) {
-            ask();
-        } else {
-            console.log("Your favorite TV Shows:", output.join(", "));
+
+async function init() {
+    try {
+        const type = await getType();
+        console.log(typeof type.type) // type.type gets value from getType promise obj
+        if (type.type === 'Employee') {
+
         }
-    });
+        // else if (type === 'Manager') {
+        // }
+
+
+
+    } catch (err) {
+        console.log(err);
+    }
 }
-ask();
+
+init()
+
+
+
+// // extend core questions with Engineer class 
+// function extendEngineer() {
+//     inquirer
+
+//     .prompt([
+//         {
+//             type: 'list',
+//             choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
+//             name: 'type',
+//             message: 'Choose team member',
+//         }
+//     ])
+
+//     .then(answers => {
+//         if (answers.type) {
+//             ask();
+//         } else {
+//             console.log('Your favorite TV Shows:', output.join(', '));
+//         }
+//     });
+// }
+
+
+
+
+
+
+
+
+
 
 /* validation script
 validate: function (input) {
     // Declare function as asynchronous, and save the done callback
     var done = this.async();
- 
+
     // Do async stuff
     setTimeout(function() {
       if (typeof input !== 'number') {
@@ -89,7 +124,7 @@ validate: function (input) {
         return;
       }
     }
-} 
+}
 */
 
 
