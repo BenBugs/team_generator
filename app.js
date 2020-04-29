@@ -83,6 +83,20 @@ function getIntern() {
 };
 
 
+function toLoopOrNotToLoop() {
+    return inquirer
+
+        .prompt([
+            {
+                type: 'input',
+                name: 'school',
+                message: 'Enter intern\'s school name'
+            }
+        ])
+};
+
+
+// async function calls
 async function init() {
     try {
         const questionsObj = await getType();
@@ -111,6 +125,7 @@ async function init() {
 
         }
 
+        const runQuestionsAgain = toLoopOrNotToLoop();
 
     } catch (err) {
         console.log(err);
@@ -118,31 +133,6 @@ async function init() {
 }
 
 init()
-
-
-
-// // extend core questions with Engineer class 
-// function extendEngineer() {
-//     inquirer
-
-//     .prompt([
-//         {
-//             type: 'list',
-//             choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
-//             name: 'type',
-//             message: 'Choose team member',
-//         }
-//     ])
-
-//     .then(answers => {
-//         if (answers.type) {
-//             ask();
-//         } else {
-//             console.log('Your favorite TV Shows:', output.join(', '));
-//         }
-//     });
-// }
-
 
 
 
