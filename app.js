@@ -13,14 +13,6 @@ const inquirer = require("inquirer");
 const teamArr = [];
 
 
-// core questions from Manager class
-const manager = [{
-    type: 'input',
-    name: 'officeNumber',
-    message: 'Office number?'
-}];
-
-
 // selector function to determine which questions to serve
 function getType() {
     return inquirer
@@ -31,44 +23,93 @@ function getType() {
                 choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
                 name: 'type',
                 message: 'Choose team member',
+            },
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Team member\'s name?'
+            }, 
+            {
+                type: 'input',
+                name: 'ID',
+                message: 'ID number?',
+            }, {
+                type: 'input',
+                name: 'email',
+                message: 'email address?',
+                // TODO validation func here
             }
         ])
 };
 
 
-// asks employee questions
-function getEmployee() {
+// asks manager question
+function getManager() {
+    return inquirer
 
-    // core questions from Employee class
-    const employee = [{
-        type: 'input',
-        name: 'name',
-        message: 'Team member\'s name?'
-    }, {
-        type: 'input',
-        name: 'ID',
-        message: 'ID number?',
-    }, {
-        type: 'input',
-        name: 'email',
-        message: 'email address?',
-        // TODO validation func here
-    }];
+        .prompt([
+            {
+                type: 'input',
+                name: 'officeNumber',
+                message: 'Enter manager\'s office number?'
+            }
+        ])
+};
 
-    return inquirer.prompt(employee)
+// asks Engineer question
+function getEngineer() {
+    return inquirer
+
+        .prompt([
+            {
+                type: 'input',
+                name: 'github',
+                message: 'Enter engineer\'s github username'
+            }
+        ])
+};
+
+// asks Intern question
+function getIntern() {
+    return inquirer
+
+        .prompt([
+            {
+                type: 'input',
+                name: 'school',
+                message: 'Enter intern\'s school name'
+            }
+        ])
 };
 
 
 async function init() {
     try {
-        const type = await getType();
-        console.log(typeof type.type) // type.type gets value from getType promise obj
-        if (type.type === 'Employee') {
+        const questionsObj = await getType();
+        console.log(questionsObj)
+
+        if (questionsObj.type === 'Employee') { 
+            return questionsObj;
+
+        } else if (questionsObj.type === 'Manager') { 
+            const getManagerObj = await getManager(); // store function in variable
+            const officeNum = getManagerObj.officeNumber; // get value from getManagerObj function
+            questionsObj.officeNumber = officeNum; 
+            console.log(questionsObj)
+
+        } else if (questionsObj.type === 'Engineer') { 
+            const getEngineerObj = await getEngineer(); // store function in variable
+            const github = getEngineerObj.github; // get value from getEngineerObj function
+            questionsObj.github_name = github; 
+            console.log(questionsObj)
+
+        } else if (questionsObj.type === 'Intern') {
+            const getInternObj = await getIntern(); // store function in variable
+            const school = getInternObj.school; // get value from getEngineerObj function
+            questionsObj.school = school; 
+            console.log(questionsObj)
 
         }
-        // else if (type === 'Manager') {
-        // }
-
 
 
     } catch (err) {
