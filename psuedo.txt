@@ -1,6 +1,9 @@
-1. create Employee parent class with following properties and methods;
-- name
-- id
-- email
+create prompt logic:
 
+1. present user with list of types of team member they can choose
+2. select the right list of questions to present to the user
+3. prompt the user to a. add more team members / b. generate team organigram
+4. either:
+        a. loop back to step 1
+        b. render team to new folder and file
 
