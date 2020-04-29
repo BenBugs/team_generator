@@ -2,13 +2,96 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
+// const path = require("path");
+// const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+// const render = require("./lib/htmlRenderer");
+
+const teamArr = [];
+
+// selector function to determine which questions to serve
+
+{
+    type: 'list',
+    choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
+    name: 'type',
+    message: 'Choose team member',
+}
+
+
+const coreQuestions = [{
+    type: 'input',
+    name: 'name',
+    message: 'Team member\'s name?'
+}, {
+    type: 'input',
+    name: 'ID',
+    message: 'Please enter ID number',
+}, {
+    type: 'input',
+    name: 'email',
+    message: 'Please enter email address',
+    // TODO validation func here
+}];
+
+
+
+//new approach with 
+
+'use strict';
+var inquirer = require('inquirer');
+var output = [];
+var questions = [{
+    type: 'input',
+    name: 'tvShow',
+    message: 'What's your favorite TV show?'
+}, {
+    type: 'confirm',
+    name: 'askAgain',
+    message: 'Want to enter another TV show favorite (just hit enter for YES)?',
+    default: true
+}, {
+    type: 'input',
+    name: 'movie',
+    message: 'What's your favorite Movie?'
+}, {
+    type: 'confirm',
+    name: 'askAgin',
+    message: 'Have one more fav?',
+    default: true
+}];
+
+function ask() {
+    inquirer.prompt(questions, function(answers) {
+        output.push(answers.tvShow);
+        if (answers.askAgain) {
+            ask();
+        } else {
+            console.log("Your favorite TV Shows:", output.join(", "));
+        }
+    });
+}
+ask();
+
+/* validation script
+validate: function (input) {
+    // Declare function as asynchronous, and save the done callback
+    var done = this.async();
+ 
+    // Do async stuff
+    setTimeout(function() {
+      if (typeof input !== 'number') {
+        // Pass the return value in the done callback
+        done('You need to provide a number');
+        return;
+      }
+    }
+} 
+*/
+
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -33,29 +116,3 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
-
-
-//code for later
-// inquirer.prompt([{ type: 'input', name: 'test', message: 'Add a test', }, { type: 'input', name: 'test2', message: 'Add a test2', }]);
-
-
-// function getUserInput() {
-
-//     return inquirer
-    
-//     .prompt([
-        
-//         {
-//             type: 'input',
-//             name: 'title',
-//             message: 'Add a project title',
-//         },
-//         {
-//             type: 'input',
-//             name: 'abc',
-//             message: 'Add an abc',
-//         }
-//         ]);
-// }
-
-// getUserInput();
