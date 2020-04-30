@@ -101,17 +101,28 @@ function toLoopOrNotToLoop() {
 async function init() {
     try {
         const questionsObj = await getType();
-        console.log(questionsObj)
+        //console.log(questionsObj)
 
         if (questionsObj.type === 'Employee') { 
             //return questionsObj;
 
         } else if (questionsObj.type === 'Manager') { 
-            const getManagerObj = await getManager(); // store function in variable
-            const officeNum = getManagerObj.officeNumber; // get value from getManagerObj function
-            questionsObj.officeNumber = officeNum; 
-            let (questionsObj.type) = new Manager; // sets new object to team member's name
+            let getManagerObj = await getManager(); // store function in variable
+            let officeNum = getManagerObj.officeNumber; // get value from getManagerObj function
+            questionsObj.officeNumber = officeNum; // this adds officeNumber pair to obj
+            //console.log({questionsObj}) //console log the new Manager obj
+            let role = questionsObj.type;
+            let name = questionsObj.name;
+            let id = questionsObj.ID;
+            let email = questionsObj.email;
+            let officeNumber = questionsObj.officeNumber;
 
+            //create the new object
+            let newManager = new Manager(name , id , email , officeNumber); //passing arguments to Manager constructor
+            teamArr.push(newManager);
+            console.log(teamArr)
+
+            
 
 
         } else if (questionsObj.type === 'Engineer') { 
