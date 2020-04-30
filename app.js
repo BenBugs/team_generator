@@ -104,7 +104,9 @@ async function init() {
         //console.log(questionsObj)
 
         if (questionsObj.type === 'Employee') { 
-            //return questionsObj;
+            let name = questionsObj.name;
+            let id = questionsObj.ID;
+            let email = questionsObj.email;
 
         } else if (questionsObj.type === 'Manager') { 
             let getManagerObj = await getManager(); // store function in variable
@@ -114,12 +116,14 @@ async function init() {
             let name = questionsObj.name;
             let id = questionsObj.ID;
             let email = questionsObj.email;
-            let officeNumber = questionsObj.officeNumber;
+            let officeNumber = questionsObj.officeNumber; //
 
             //create the new object
             let newManager = new Manager(name , id , email , officeNumber); //passing arguments to Manager constructor
-            let newManagerPlus = newManager + getRoll();
-            teamArr.push(newManagerPlus);
+            console.log(newManager)
+            let role = newManager.getRole(); // get role propoerty from Manager class
+            newManager.role = role; // this adds officeNumber pair to obj
+            teamArr.push(newManager);
             console.log(teamArr)
 
             
