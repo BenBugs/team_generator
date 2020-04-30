@@ -82,15 +82,16 @@ function getIntern() {
         ])
 };
 
-
+// want to add another team member?
 function toLoopOrNotToLoop() {
     return inquirer
 
         .prompt([
             {
-                type: 'input',
-                name: 'school',
-                message: 'Enter intern\'s school name'
+                type: 'list',
+                choices: ['Add another team member', 'Create team chart'],
+                name: 'type',
+                message: 'What would you like to do?',
             }
         ])
 };
@@ -103,29 +104,35 @@ async function init() {
         console.log(questionsObj)
 
         if (questionsObj.type === 'Employee') { 
-            return questionsObj;
+            //return questionsObj;
 
         } else if (questionsObj.type === 'Manager') { 
             const getManagerObj = await getManager(); // store function in variable
             const officeNum = getManagerObj.officeNumber; // get value from getManagerObj function
             questionsObj.officeNumber = officeNum; 
-            console.log(questionsObj)
+            let (questionsObj.type) = new Manager; // sets new object to team member's name
+
+
 
         } else if (questionsObj.type === 'Engineer') { 
             const getEngineerObj = await getEngineer(); // store function in variable
             const github = getEngineerObj.github; // get value from getEngineerObj function
             questionsObj.github_name = github; 
-            console.log(questionsObj)
 
         } else if (questionsObj.type === 'Intern') {
             const getInternObj = await getIntern(); // store function in variable
             const school = getInternObj.school; // get value from getEngineerObj function
             questionsObj.school = school; 
-            console.log(questionsObj)
 
         }
 
-        const runQuestionsAgain = toLoopOrNotToLoop();
+        const runQuestionsAgain = await toLoopOrNotToLoop();
+        if (runQuestionsAgain.type === 'Add another team member') {
+            init();
+        } else if (runQuestionsAgain.type === 'Create team chart') {
+            //run generate team chart function
+        }
+
 
     } catch (err) {
         console.log(err);
