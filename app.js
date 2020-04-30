@@ -148,7 +148,6 @@ async function init() {
 
             //create the new object
             let newEngineer = new Engineer(name, id, email, username); //passing arguments to Manager constructor
-            //console.log(newManager)
             let role = newEngineer.getRole(); // get role propoerty from Manager class
             newEngineer.role = role; // this adds officeNumber pair to obj
             teamArr.push(newEngineer);
@@ -165,11 +164,10 @@ async function init() {
             let school = questionsObj.school_name; //
 
             //create the new object
-            let newEngineer = new Engineer(name, id, email, username); //passing arguments to Manager constructor
-            //console.log(newManager)
-            let role = newEngineer.getRole(); // get role propoerty from Manager class
+            let newIntern = new Intern(name, id, email, school); //passing arguments to Manager constructor
+            let role = newIntern.getRole(); // get role propoerty from Manager class
             newEngineer.role = role; // this adds officeNumber pair to obj
-            teamArr.push(newEngineer);
+            teamArr.push(newIntern);
             console.log(teamArr)
 
         }
