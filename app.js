@@ -5,9 +5,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-// const directoryPath = ('./team_sheets');
-// const filePath = ('./team_sheets/team_sheet.html');
-// const file = ('team.html');
+
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -47,11 +45,11 @@ function getType() {
                 type: 'input',
                 name: 'ID',
                 message: 'ID number?',
-            }, {
+            },
+            {
                 type: 'input',
                 name: 'email',
                 message: 'email address?',
-                // TODO validation func here
             }
         ])
 };
@@ -189,46 +187,26 @@ async function init() {
         } else if (runQuestionsAgain.type === 'Create team chart') {
 
             try {
-                function renderHTML(render) {
-                    fs.writeFile(outputPath , render, (err) => {
+
+                let html = render(teamArr);
+                console.log(html)
+
+
+
+                function renderHTML(data) {
+                    fs.writeFile(outputPath, data, (err) => {
                         if (err) throw err;
-                        console.log('The file has been saved!');
-                      })
-                    console.log(renderHTML)
-                };
-                renderHTML()
+                        console.log('Your team file has been saved!');
+                    })
+                }
+                renderHTML(html);
 
-                //console.log(renderHTML)
-              }
-              catch(error) {
+            }
+            catch (error) {
                 console.error(error);
-                // expected output: ReferenceError: nonExistentFunction is not defined
-                // Note - error messages will vary depending on browser
-              }
+            }
 
 
-
-            // //check if an html file exists
-            // try {
-            
-            //   if (fs.existsSync(noDirectoryNoFile)) {
-            //     //then create directory in the root folder called team_sheets and add new team sheet to the folder called 'team_sheet.html'
-            //   } 
-              
-            //   if (fs.existsSync(directoryNoFile)) {
-            //     //if directory exists, then check for a file called 'team_sheet.html'. If not present, save a new file called 'team_sheet.html'
-
-            //   }
-
-            //   if (fs.existsSync(directoryAndFile)) {
-            //     //if directory exists and file exists then check fiule nameto se if digits exist in file name using parseInt(). 
-            //     //If present, save a new file called 'team_sheet${+1}.html' to folder
-
-            //   }
-
-            // } catch(err) {
-            //   console.error(err)
-            // }
         }
 
 
@@ -238,27 +216,4 @@ async function init() {
 }
 
 init();
-
-
-
-
-
-
-
-
-/* validation script
-validate: function (input) {
-    // Declare function as asynchronous, and save the done callback
-    var done = this.async();
-
-    // Do async stuff
-    setTimeout(function() {
-      if (typeof input !== 'number') {
-        // Pass the return value in the done callback
-        done('You need to provide a number');
-        return;
-      }
-    }
-}
-*/
 
