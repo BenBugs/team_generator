@@ -3,16 +3,29 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
+// const directoryPath = ('./team_sheets');
+// const filePath = ('./team_sheets/team_sheet.html');
+// const file = ('team.html');
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// const render = require("./lib/htmlRenderer");
+const render = require("./lib/htmlRenderer");
 
+
+// writeFile conditions stored in variables
+//1. if no directory exists and no file exist then create folder and save file called team_sheet.html
+// const noDirectoryNoFile = directoryPath !== true && filePath !== true;
+//2. if directory exists then check for a file called teamsheets.html. If not present, save a new file called team sheets...
+// const directoryNoFile = directoryPath === true && filePath !== true;
+//3. if present then check to see if the file has numbers, ParseInt(). then add 1 to the file name and save  
+// const directoryAndFile = directoryPath === true && filePath === true;
+
+
+//store team object array here
 const teamArr = [];
-
 
 // selector function to determine which questions to serve
 function getType() {
@@ -21,7 +34,7 @@ function getType() {
         .prompt([
             {
                 type: 'list',
-                choices: ['Employee', 'Manager', 'Engineer', 'Intern'],
+                choices: ['Manager', 'Engineer', 'Intern'],
                 name: 'type',
                 message: 'Choose team member',
             },
@@ -42,7 +55,6 @@ function getType() {
             }
         ])
 };
-
 
 // asks manager question
 function getManager() {
@@ -168,7 +180,6 @@ async function init() {
             let role = newIntern.getRole(); // get role propoerty from Manager class
             newIntern.role = role; // this adds officeNumber pair to obj
             teamArr.push(newIntern);
-            console.log(teamArr)
 
         }
 
@@ -176,7 +187,48 @@ async function init() {
         if (runQuestionsAgain.type === 'Add another team member') {
             init();
         } else if (runQuestionsAgain.type === 'Create team chart') {
-            //run generate team chart function
+
+            try {
+                function renderHTML(render) {
+                    fs.writeFile(outputPath , render, (err) => {
+                        if (err) throw err;
+                        console.log('The file has been saved!');
+                      })
+                    console.log(renderHTML)
+                };
+                renderHTML()
+
+                //console.log(renderHTML)
+              }
+              catch(error) {
+                console.error(error);
+                // expected output: ReferenceError: nonExistentFunction is not defined
+                // Note - error messages will vary depending on browser
+              }
+
+
+
+            // //check if an html file exists
+            // try {
+            
+            //   if (fs.existsSync(noDirectoryNoFile)) {
+            //     //then create directory in the root folder called team_sheets and add new team sheet to the folder called 'team_sheet.html'
+            //   } 
+              
+            //   if (fs.existsSync(directoryNoFile)) {
+            //     //if directory exists, then check for a file called 'team_sheet.html'. If not present, save a new file called 'team_sheet.html'
+
+            //   }
+
+            //   if (fs.existsSync(directoryAndFile)) {
+            //     //if directory exists and file exists then check fiule nameto se if digits exist in file name using parseInt(). 
+            //     //If present, save a new file called 'team_sheet${+1}.html' to folder
+
+            //   }
+
+            // } catch(err) {
+            //   console.error(err)
+            // }
         }
 
 
@@ -185,8 +237,7 @@ async function init() {
     }
 }
 
-init()
-
+init();
 
 
 
@@ -211,27 +262,3 @@ validate: function (input) {
 }
 */
 
-
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
